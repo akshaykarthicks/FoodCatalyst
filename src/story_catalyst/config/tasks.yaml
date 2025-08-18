@@ -1,0 +1,61 @@
+research_task:
+  description: >
+    Research and discover highly-rated or trending restaurants in the {location} area that match the user's preference for {topic}. 
+    Collect reliable information from credible sources only. 
+    Each restaurant entry must include ratings, cuisine type, location highlights, an image URL, and a short note on what makes it stand out.
+  expected_output: >
+    A list of 5–10 restaurant recommendations. 
+    Each recommendation must include: 
+    - name 
+    - rating (with source, e.g., Tripadvisor, Zomato, Google Maps) 
+    - cuisine type 
+    - location 
+    - standout features 
+    - image_url (verified, non-placeholder, preferably from the restaurant's official site or trusted review platform).
+  agent: scout
+
+analyze_task:
+  description: >
+    Review and analyze the restaurant options provided by the Scout. 
+    For each restaurant, examine menus, customer feedback, and available photos. 
+    Provide a clear, balanced assessment with both pros and cons, avoiding speculation. 
+    If data is missing or uncertain, explicitly mark it as "not available" instead of inventing details.
+  expected_output: >
+    A structured list of restaurant analyses. 
+    For each restaurant include: 
+    - pros 
+    - cons 
+    - overall assessment 
+    - recommendation rating (numerical, e.g., 1–5 scale). 
+    The output must remain factual, concise, and user-oriented.
+  agent: critic
+
+planning_task:
+  description: >
+    Create a personalized dining itinerary using the restaurants researched by Scout and analyzed by Critic. 
+    Organize them into a user-friendly plan that balances variety, convenience, and alignment with user preferences. 
+    Do not invent booking links or unavailable information.
+  expected_output: >
+    A JSON object with the key "itinerary". 
+    The value should be a list of restaurant objects. 
+    Each restaurant object must contain: 
+    - name 
+    - rating 
+    - cuisine 
+    - location 
+    - analysis (from Critic) 
+    - booking_link (set to "not available" if no reliable link is found) 
+    - image_url.
+  agent: planner
+
+formatting_task:
+  description: >
+    Take the JSON dining itinerary from Planner and convert it into a polished, single-page HTML report. 
+    The report must include inline CSS for styling and be structured for readability. 
+    Ensure images render correctly and all text sections (ratings, analyses, pros/cons, recommendations) are included.
+  expected_output: >
+    A complete HTML document as a string, styled with inline CSS. 
+    The report must be visually clean, accessible, and present the itinerary as a dining guide. 
+    No placeholders or broken links should be included.
+  agent: formatter
+  output_file: report.html

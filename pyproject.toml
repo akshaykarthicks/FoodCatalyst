@@ -1,0 +1,23 @@
+[project]
+name = "story_catalyst"
+version = "0.1.0"
+description = "Food Catalyst using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=0.152.0,<1.0.0"
+]
+
+[project.scripts]
+story_catalyst = "story_catalyst.main:run"
+run_crew = "story_catalyst.main:run"
+train = "story_catalyst.main:train"
+replay = "story_catalyst.main:replay"
+test = "story_catalyst.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
