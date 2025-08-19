@@ -1,7 +1,7 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
-from FoodCatalyst.src.story_catalyst.tools import HTMLGeneratorTool
+from food_catalyst.tools import HTMLGeneratorTool
 
 
 @CrewBase
@@ -70,7 +70,7 @@ class FoodCatalyst():
 
     @crew
     def crew(self) -> Crew:
-        """Creates the StoryCatalyst crew"""
+        """Creates the FoodCatalyst crew"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
