@@ -34,7 +34,7 @@ planning_task:
   description: >
     Create a personalized dining itinerary using the restaurants researched by Scout and analyzed by Critic. 
     Organize them into a user-friendly plan that balances variety, convenience, and alignment with user preferences. 
-    Do not invent booking links or unavailable information.
+    For booking links, make an effort to find official restaurant websites or reservation platforms like OpenTable, Resy, or similar.
   expected_output: >
     A JSON object with the key "itinerary". 
     The value should be a list of restaurant objects. 
@@ -44,7 +44,7 @@ planning_task:
     - cuisine 
     - location 
     - analysis (from Critic) 
-    - booking_link (set to "not available" if no reliable link is found) 
+    - booking_link (make an effort to find real booking links; if truly unavailable, use "#") 
     - image_url.
   agent: planner
 
@@ -53,9 +53,10 @@ formatting_task:
     Take the JSON dining itinerary from Planner and convert it into a polished, single-page HTML report. 
     The report must include inline CSS for styling and be structured for readability. 
     Ensure images render correctly and all text sections (ratings, analyses, pros/cons, recommendations) are included.
+    If the input data is not properly formatted as JSON with an itinerary key, make an effort to parse it correctly.
   expected_output: >
     A complete HTML document as a string, styled with inline CSS. 
     The report must be visually clean, accessible, and present the itinerary as a dining guide. 
-    No placeholders or broken links should be included.
+    No placeholders or broken links should be included. Handle missing booking links gracefully.
   agent: formatter
   output_file: report.html

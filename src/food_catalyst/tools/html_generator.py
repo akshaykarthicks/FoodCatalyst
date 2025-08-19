@@ -1,15 +1,23 @@
 from crewai.tools import BaseTool
 import json
 
+
 class HTMLGeneratorTool(BaseTool):
     name: str = "HTML Report Generator"
     description: str = "Generates an HTML report from a JSON object representing a dining itinerary."
 
     def _run(self, data: str) -> str:
         try:
-            itinerary = json.loads(data)['itinerary']
+            # Try to parse as JSON first
+            parsed_data = json.loads(data)
+            # Check if it's the itinerary format or full result
+            if 'itinerary' in parsed_data:
+                itinerary = parsed_data['itinerary']
+            else:
+                # If not, try to find itinerary in nested structure
+                itinerary = parsed_data
         except (json.JSONDecodeError, KeyError):
-            return "Error: Invalid JSON format. Expected a JSON object with an 'itinerary' key containing a list of restaurants."
+            return f"Error: Invalid JSON format. Expected a JSON object with an 'itinerary' key. Received: {data}"
 
         html = """
         <!DOCTYPE html>
@@ -78,6 +86,13 @@ class HTMLGeneratorTool(BaseTool):
             .booking-link:hover {
                 background-color: #2980b9;
             }
+            .booking-link.disabled {
+                background-color: #bdc3c7;
+                cursor: not-allowed;
+            }
+            .booking-link.disabled:hover {
+                background-color: #bdc3c7;
+            }
         </style>
         </head>
         <body>
@@ -92,6 +107,17 @@ class HTMLGeneratorTool(BaseTool):
                 # Use a generic food image
                 image_url = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80'
             
+            # Handle booking link
+            booking_link = restaurant.get('booking_link', '#')
+            booking_text = "Book Now"
+            booking_class = "booking-link"
+            
+            # If no booking link is available, disable the button
+            if not booking_link or booking_link == "not available" or booking_link == "#":
+                booking_link = "#"
+                booking_text = "Booking Unavailable"
+                booking_class += " disabled"
+            
             html += f"""
             <div class="restaurant">
                 <div class="restaurant-image">
@@ -104,7 +130,7 @@ class HTMLGeneratorTool(BaseTool):
                     <p class="rating"><strong>Rating:</strong> {restaurant.get('rating', 'N/A')}</p>
                     <h3>Analysis</h3>
                     <p>{restaurant.get('analysis', 'N/A')}</p>
-                    <a href="{restaurant.get('booking_link', '#')}" class="booking-link" target="_blank">Book Now</a>
+                    <a href="{booking_link}" class="{booking_class}" target="_blank" {'onclick="return false;"' if 'disabled' in booking_class else ''}>{booking_text}</a>
                 </div>
             </div>
             """
@@ -115,4 +141,3 @@ class HTMLGeneratorTool(BaseTool):
         </html>
         """
         return html
-       

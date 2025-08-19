@@ -32,10 +32,12 @@
     }
     .restaurant-image {
         flex: 1;
+        min-width: 200px;
     }
     .restaurant-image img {
         width: 100%;
-        height: auto;
+        height: 200px;
+        object-fit: cover;
         border-radius: 8px;
     }
     .restaurant-details {
@@ -63,6 +65,13 @@
     .booking-link:hover {
         background-color: #2980b9;
     }
+    .booking-link.disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+    }
+    .booking-link.disabled:hover {
+        background-color: #bdc3c7;
+    }
 </style>
 </head>
 <body>
@@ -71,46 +80,76 @@
 
     <div class="restaurant">
         <div class="restaurant-image">
-            <img src="https://b.zmtcdn.com/data/pictures/7/66997/c188f8eba89d505d143653653a3edce1_featured_v2.jpg?fit=around|771.75:416.25&crop=771.75:416.25;*,*)" alt="Ottimo Cucina Italiana">
+            <img src="#" alt="Annalakshmi" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
         </div>
         <div class="restaurant-details">
-            <h2>Ottimo Cucina Italiana</h2>
-            <p><strong>Cuisine:</strong> Italian</p>
-            <p><strong>Location:</strong> ITC Grand Chola, Guindy, Chennai</p>
-            <p class="rating"><strong>Rating:</strong> 4.6</p>
-            <h3>Analysis</h3>
-            <p>Consistently high ratings, likely offers a wide variety of classic Italian dishes. Price point is high (approx. ₹6500 for two).</p>
-            <a href="https://www.zomato.com/chennai/ottimo-cucina-italiana-itc-grand-chola-guindy" class="booking-link" target="_blank">Book Now</a>
-        </div>
-    </div>
-    
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="https://b.zmtcdn.com/data/pictures/4/65624/4d5290701b2d5d36fcb976a5d39a3ea8.jpg?fit=around|771.75:416.25&crop=771.75:416.25;*,*" alt="Tuscana Pizzeria">
-        </div>
-        <div class="restaurant-details">
-            <h2>Tuscana Pizzeria</h2>
-            <p><strong>Cuisine:</strong> Italian (Pizza)</p>
-            <p><strong>Location:</strong> Multiple locations in Chennai (Nungambakkam, Alwarpet, ECR)</p>
-            <p class="rating"><strong>Rating:</strong> 4.3</p>
-            <h3>Analysis</h3>
-            <p>Highly rated, specializes in pizza.  Offers thin crust wood-fired pizzas with various bases. Price point is moderate (approx. ₹1200-₹1600 for two).</p>
-            <a href="https://www.zomato.com/chennai/tuscana-pizzeria-nungambakkam" class="booking-link" target="_blank">Book Now</a>
-        </div>
-    </div>
-    
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="https://b.zmtcdn.com/data/pictures/chains/2/68502/ba1d66950aeaab3fcbdd296f5fab5b83.jpeg" alt="Little Italy">
-        </div>
-        <div class="restaurant-details">
-            <h2>Little Italy</h2>
-            <p><strong>Cuisine:</strong> Vegetarian Italian</p>
-            <p><strong>Location:</strong> Multiple locations in Chennai (Besant Nagar, Nungambakkam)</p>
+            <h2>Annalakshmi</h2>
+            <p><strong>Cuisine:</strong> South Indian Vegetarian</p>
+            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
             <p class="rating"><strong>Rating:</strong> 4.5</p>
             <h3>Analysis</h3>
-            <p>Good choice for vegetarian Italian food. Price point is moderate (approx. ₹1100-₹1300 for two).</p>
-            <a href="https://www.zomato.com/chennai/little-italy-besant-nagar" class="booking-link" target="_blank">Book Now</a>
+            <p>A popular vegetarian restaurant known for its traditional South Indian dishes and charitable work.</p>
+            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
+        </div>
+    </div>
+    
+    <div class="restaurant">
+        <div class="restaurant-image">
+            <img src="#" alt="Dakshin" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
+        </div>
+        <div class="restaurant-details">
+            <h2>Dakshin</h2>
+            <p><strong>Cuisine:</strong> South Indian</p>
+            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
+            <p class="rating"><strong>Rating:</strong> 4.8</p>
+            <h3>Analysis</h3>
+            <p>Upscale restaurant offering a refined take on South Indian cuisine.</p>
+            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
+        </div>
+    </div>
+    
+    <div class="restaurant">
+        <div class="restaurant-image">
+            <img src="#" alt="Benjarong" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
+        </div>
+        <div class="restaurant-details">
+            <h2>Benjarong</h2>
+            <p><strong>Cuisine:</strong> Thai</p>
+            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
+            <p class="rating"><strong>Rating:</strong> 4.6</p>
+            <h3>Analysis</h3>
+            <p>A highly-rated Thai restaurant known for its authentic flavors and ambiance.</p>
+            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
+        </div>
+    </div>
+    
+    <div class="restaurant">
+        <div class="restaurant-image">
+            <img src="#" alt="The Fisherman's Wharf" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
+        </div>
+        <div class="restaurant-details">
+            <h2>The Fisherman's Wharf</h2>
+            <p><strong>Cuisine:</strong> Seafood</p>
+            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
+            <p class="rating"><strong>Rating:</strong> 4.2</p>
+            <h3>Analysis</h3>
+            <p>Known for its fresh seafood and lively ambiance. Can be a bit loud.</p>
+            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
+        </div>
+    </div>
+    
+    <div class="restaurant">
+        <div class="restaurant-image">
+            <img src="#" alt="Madras Coffee House" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
+        </div>
+        <div class="restaurant-details">
+            <h2>Madras Coffee House</h2>
+            <p><strong>Cuisine:</strong> South Indian, Coffee</p>
+            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
+            <p class="rating"><strong>Rating:</strong> 4.0</p>
+            <h3>Analysis</h3>
+            <p>A legendary coffee house serving traditional South Indian breakfast and snacks.</p>
+            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
         </div>
     </div>
     

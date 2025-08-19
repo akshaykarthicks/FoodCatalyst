@@ -18,7 +18,7 @@ def run():
     Run the crew.
     """
     topic = {
-        'topic': 'Italian cuisine',
+        'topic': 'Briayani',
         'location': 'Chennai',
         'current_year': str(datetime.now().year)
     }
