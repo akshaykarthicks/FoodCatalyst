@@ -13,6 +13,8 @@ StoryCatalyst transforms how you discover and plan dining experiences by leverag
 3. Create personalized dining itineraries based on your preferences
 
 Whether you're a local looking for new dining experiences or a traveler seeking the best local cuisine, StoryCatalyst creates tailored restaurant recommendations that match your taste.
+<img width="1812" height="1036" alt="image" src="https://github.com/user-attachments/assets/25b05bb4-4626-48ad-aa3c-809411dbd8ca" />
+
 
 ## 🤖 Agents
 
