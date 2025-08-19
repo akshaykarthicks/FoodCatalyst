@@ -4,7 +4,7 @@ import warnings
 
 from datetime import datetime
 
-from story_catalyst.crew import StoryCatalyst
+from food_catalyst.crew import FoodCatalyst
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -23,7 +23,7 @@ def run():
         'current_year': str(datetime.now().year)
     }
     
-    result = StoryCatalyst().crew().kickoff(inputs=topic)
+    result = FoodCatalyst().crew().kickoff(inputs=topic)
 
     print("\n\n=== FINAL REPORT ===\n\n")
     print(result.raw)
