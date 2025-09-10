@@ -3,20 +3,36 @@
 
 /* --- CSS Variables for Theme --- */
 :root {
-    --primary-color: #00A9FF; /* A vibrant blue for CTAs and highlights */
-    --secondary-color: #34495e; /* A muted blue for secondary text */
-    --background-color: #0d1117; /* A very dark, almost black background */
-    --container-bg-color: #161b22; /* A slightly lighter dark for containers */
-    --text-color: #FAFAFA; /* Off-white for primary text */
-    --text-color-light: #bdc3c7; /* Light grey for subtitles */
+    /* Theme colors from user */
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.269 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.371 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --destructive-foreground: oklch(0.985 0 0);
+    --border: oklch(0.275 0 0);
+    --input: oklch(0.325 0 0);
+    --ring: oklch(0.556 0 0);
+
+    /* Font */
     --font-family: 'Poppins', sans-serif;
 }
 
 /* --- General Body Styles --- */
 body {
     font-family: var(--font-family);
-    background-image: linear-gradient(135deg, var(--background-color) 0%, var(--container-bg-color) 100%);
-    color: var(--text-color);
+    background-color: var(--background);
+    color: var(--foreground);
 }
 
 /* --- Remove Streamlit's default hamburger menu and header --- */
@@ -37,13 +53,14 @@ footer {visibility: hidden;}
     padding: 6rem 2rem;
     min-height: 80vh;
     animation: fadeIn 1.5s ease-in-out;
+    background-image: linear-gradient(135deg, var(--background) 0%, var(--secondary) 100%);
 }
 
 .hero-section h1 {
     font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--text-color);
+    color: var(--foreground);
     letter-spacing: -2px;
 }
 
@@ -51,22 +68,22 @@ footer {visibility: hidden;}
     font-size: 2.2rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    color: var(--primary); /* Using primary as the highlight color */
 }
 
 .hero-section .subtitle {
     font-size: 1.2rem;
     font-weight: 300;
-    color: var(--text-color-light);
+    color: var(--muted-foreground);
     max-width: 600px;
     margin-bottom: 2rem;
 }
 
 /* --- Custom Streamlit Button Style --- */
 .stButton > button {
-    border: 2px solid var(--primary-color);
+    border: 2px solid var(--primary);
     border-radius: 50px; /* Pill shape */
-    color: var(--primary-color);
+    color: var(--primary);
     background-color: transparent;
     padding: 0.75rem 2.5rem;
     font-weight: 600;
@@ -75,11 +92,11 @@ footer {visibility: hidden;}
 }
 
 .stButton > button:hover {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border-color: var(--primary-color);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 169, 255, 0.2);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); /* Generic shadow for light color */
 }
 
 .stButton > button:active {
@@ -92,28 +109,29 @@ footer {visibility: hidden;}
 .features-section {
     padding: 4rem 2rem;
     text-align: center;
+    background-color: var(--background);
 }
 
 .features-section h2 {
     font-size: 2.5rem;
     font-weight: 600;
     margin-bottom: 3rem;
-    color: var(--text-color);
+    color: var(--foreground);
 }
 
 .feature-card {
-    background-color: var(--container-bg-color);
+    background-color: var(--card);
     padding: 2rem;
     border-radius: 15px;
-    border: 1px solid #2d343b;
+    border: 1px solid var(--border);
     transition: all 0.3s ease-in-out;
     height: 100%;
 }
 
 .feature-card:hover {
     transform: translateY(-10px);
-    border-color: var(--primary-color);
-    box-shadow: 0 15px 30px rgba(0, 169, 255, 0.1);
+    border-color: var(--ring);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .feature-card h3 {
@@ -125,12 +143,12 @@ footer {visibility: hidden;}
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: var(--primary-color);
+    color: var(--primary);
 }
 
 .feature-card p {
     font-size: 0.9rem;
-    color: var(--text-color-light);
+    color: var(--muted-foreground);
 }
 
 /* --- Animations --- */
