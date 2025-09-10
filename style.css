@@ -79,8 +79,10 @@ footer {visibility: hidden;}
     margin-bottom: 2rem;
 }
 
-/* --- Custom Streamlit Button Style --- */
-.stButton > button {
+/* --- Custom Call-to-Action Button Style --- */
+.cta-button {
+    display: inline-block;
+    text-decoration: none;
     border: 2px solid var(--primary);
     border-radius: 50px; /* Pill shape */
     color: var(--primary);
@@ -91,7 +93,7 @@ footer {visibility: hidden;}
     transition: all 0.3s ease-in-out;
 }
 
-.stButton > button:hover {
+.cta-button:hover {
     background-color: var(--primary);
     color: var(--primary-foreground);
     border-color: var(--primary);
@@ -99,7 +101,7 @@ footer {visibility: hidden;}
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); /* Generic shadow for light color */
 }
 
-.stButton > button:active {
+.cta-button:active {
     transform: translateY(0);
     box-shadow: none;
 }
@@ -117,6 +119,12 @@ footer {visibility: hidden;}
     font-weight: 600;
     margin-bottom: 3rem;
     color: var(--foreground);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
 }
 
 .feature-card {
@@ -186,8 +194,9 @@ footer {visibility: hidden;}
         font-size: 2rem;
     }
 
-    /* Streamlit columns will stack automatically. Add some space between them. */
-    /* .st-emotion-cache-1b2q22a { gap: 1rem; } <-- Removing this fragile selector to be safe. */
+    .features-grid {
+        grid-template-columns: 1fr; /* Stack columns on mobile */
+    }
 
     .feature-card {
         padding: 1.5rem;
