@@ -1,0 +1,179 @@
+/* --- Import Google Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* --- CSS Variables for Theme --- */
+:root {
+    --primary-color: #00A9FF; /* A vibrant blue for CTAs and highlights */
+    --secondary-color: #34495e; /* A muted blue for secondary text */
+    --background-color: #0d1117; /* A very dark, almost black background */
+    --container-bg-color: #161b22; /* A slightly lighter dark for containers */
+    --text-color: #FAFAFA; /* Off-white for primary text */
+    --text-color-light: #bdc3c7; /* Light grey for subtitles */
+    --font-family: 'Poppins', sans-serif;
+}
+
+/* --- General Body Styles --- */
+body {
+    font-family: var(--font-family);
+    background-image: linear-gradient(135deg, var(--background-color) 0%, var(--container-bg-color) 100%);
+    color: var(--text-color);
+}
+
+/* --- Remove Streamlit's default hamburger menu and header --- */
+.st-emotion-cache-18ni7ap {
+    padding: 0;
+}
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* --- Hero Section Styling --- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    min-height: 80vh;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-section h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    letter-spacing: -2px;
+}
+
+.hero-section h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.hero-section .subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text-color-light);
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+/* --- Custom Streamlit Button Style --- */
+.stButton > button {
+    border: 2px solid var(--primary-color);
+    border-radius: 50px; /* Pill shape */
+    color: var(--primary-color);
+    background-color: transparent;
+    padding: 0.75rem 2.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.stButton > button:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 169, 255, 0.2);
+}
+
+.stButton > button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+
+/* --- Features Section --- */
+.features-section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
+.feature-card {
+    background-color: var(--container-bg-color);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid #2d343b;
+    transition: all 0.3s ease-in-out;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 30px rgba(0, 169, 255, 0.1);
+}
+
+.feature-card h3 {
+    font-size: 2.5rem; /* For emoji */
+    margin-bottom: 1rem;
+}
+
+.feature-card h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+    color: var(--text-color-light);
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 4rem 1rem;
+    }
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section h2 {
+        font-size: 1.5rem;
+    }
+    .hero-section .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .features-section {
+        padding: 3rem 1rem;
+    }
+
+    .features-section h2 {
+        font-size: 2rem;
+    }
+
+    /* Streamlit columns will stack automatically. Add some space between them. */
+    .st-emotion-cache-1b2q22a { /* This selector might be fragile. It targets the column container. */
+        gap: 1rem;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+}
