@@ -36,11 +36,11 @@ body {
 }
 
 /* --- Remove Streamlit's default hamburger menu and header --- */
-.st-emotion-cache-18ni7ap {
-    padding: 0;
-}
+/* A more robust way to target the main app container for padding would be needed if this is essential */
+/* For now, we remove the fragile selector .st-emotion-cache-18ni7ap */
+
 #MainMenu {visibility: hidden;}
-header {visibility: hidden;}
+/* header {visibility: hidden;}  <-- THIS IS THE LIKELY CULPRIT. A generic 'header' tag selector can hide the entire Streamlit app. */
 footer {visibility: hidden;}
 
 /* --- Hero Section Styling --- */
@@ -187,9 +187,7 @@ footer {visibility: hidden;}
     }
 
     /* Streamlit columns will stack automatically. Add some space between them. */
-    .st-emotion-cache-1b2q22a { /* This selector might be fragile. It targets the column container. */
-        gap: 1rem;
-    }
+    /* .st-emotion-cache-1b2q22a { gap: 1rem; } <-- Removing this fragile selector to be safe. */
 
     .feature-card {
         padding: 1.5rem;
