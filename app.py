@@ -1,3 +1,12 @@
+# SQLite workaround for Streamlit Cloud (Linux environment)
+try:
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    # On Windows or if pysqlite3 is not available, use system sqlite3
+    pass
+
 import streamlit as st
 
 # Set page configuration
