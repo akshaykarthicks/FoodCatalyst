@@ -1,2 +1,0 @@
-streamlit
-pysqlite3-binary
