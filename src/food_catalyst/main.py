@@ -1,3 +1,16 @@
+
+# SQLite workaround for cloud environments
+try:
+    __import__('pysqlite3')
+    import sys as _sys
+    _sys.modules['sqlite3'] = _sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+
+
+
+
 #!/usr/bin/env python
 import sys
 import warnings
