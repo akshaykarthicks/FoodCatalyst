@@ -1,3 +1,14 @@
+# SQLite workaround for cloud environments
+try:
+    __import__('pysqlite3')
+    import sys as _sys
+    _sys.modules['sqlite3'] = _sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
+
+
+
 import streamlit as st
 import os
 import sys
