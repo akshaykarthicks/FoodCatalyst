@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
 from datetime import datetime
+
+# Load environment variables
+from dotenv import load_dotenv
+
 
 from food_catalyst.crew import FoodCatalyst
 
@@ -16,14 +19,16 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 def run():
     """
     Run the crew.
+
     """
-    topic = {
-        'topic': 'Briayani',
+    load_dotenv()
+    inputs = {
+        'topic': 'Biryani',
         'location': 'Chennai',
         'current_year': str(datetime.now().year)
     }
     
-    result = FoodCatalyst().crew().kickoff(inputs=topic)
+    result = FoodCatalyst().crew().kickoff(inputs=inputs)
 
     print("\n\n=== FINAL REPORT ===\n\n")
     print(result.raw)
@@ -31,6 +36,5 @@ def run():
     print("\n\nReport has been saved to output/report.md")
 
 
-    if __name__ == "__main__":
-        run()
-    
+if __name__ == "__main__":
+    run()

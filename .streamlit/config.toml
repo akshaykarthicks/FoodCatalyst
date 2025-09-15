@@ -1,2 +1,9 @@
 [server]
 folderWatchBlacklist = [".git"]
+
+[theme]
+primaryColor = "#a3004c"
+backgroundColor = "#f8f1f5"
+secondaryBackgroundColor = "#dbc5d2"
+textColor = "#221d27"
+font = "sans serif"

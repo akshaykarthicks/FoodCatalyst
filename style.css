@@ -3,160 +3,376 @@
 
 /* --- CSS Variables for Theme --- */
 :root {
-    /* Theme colors from user */
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.269 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.371 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --destructive-foreground: oklch(0.985 0 0);
-    --border: oklch(0.275 0 0);
-    --input: oklch(0.325 0 0);
-    --ring: oklch(0.556 0 0);
+  --background: oklch(0.9754 0.0084 325.6414);
+  --foreground: oklch(0.3257 0.1161 325.0372);
+  --card: oklch(0.9754 0.0084 325.6414);
+  --card-foreground: oklch(0.3257 0.1161 325.0372);
+  --popover: oklch(1.0000 0 0);
+  --popover-foreground: oklch(0.3257 0.1161 325.0372);
+  --primary: oklch(0.5316 0.1409 355.1999);
+  --primary-foreground: oklch(1.0000 0 0);
+  --secondary: oklch(0.8696 0.0675 334.8991);
+  --secondary-foreground: oklch(0.4448 0.1341 324.7991);
+  --muted: oklch(0.9395 0.0260 331.5454);
+  --muted-foreground: oklch(0.4924 0.1244 324.4523);
+  --accent: oklch(0.8696 0.0675 334.8991);
+  --accent-foreground: oklch(0.4448 0.1341 324.7991);
+  --destructive: oklch(0.5248 0.1368 20.8317);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --border: oklch(0.8568 0.0829 328.9110);
+  --input: oklch(0.8517 0.0558 336.6002);
+  --ring: oklch(0.5916 0.2180 0.5844);
+  --chart-1: oklch(0.6038 0.2363 344.4657);
+  --chart-2: oklch(0.4445 0.2251 300.6246);
+  --chart-3: oklch(0.3790 0.0438 226.1538);
+  --chart-4: oklch(0.8330 0.1185 88.3461);
+  --chart-5: oklch(0.7843 0.1256 58.9964);
+  --sidebar: oklch(0.9360 0.0288 320.5788);
+  --sidebar-foreground: oklch(0.4948 0.1909 354.5435);
+  --sidebar-primary: oklch(0.3963 0.0251 285.1962);
+  --sidebar-primary-foreground: oklch(0.9668 0.0124 337.5228);
+  --sidebar-accent: oklch(0.9789 0.0013 106.4235);
+  --sidebar-accent-foreground: oklch(0.3963 0.0251 285.1962);
+  --sidebar-border: oklch(0.9383 0.0026 48.7178);
+  --sidebar-ring: oklch(0.5916 0.2180 0.5844);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+}
 
-    /* Font */
-    --font-family: 'Poppins', sans-serif;
+.dark {
+  --background: oklch(0.2409 0.0201 307.5346);
+  --foreground: oklch(0.8398 0.0387 309.5391);
+  --card: oklch(0.2803 0.0232 307.5413);
+  --card-foreground: oklch(0.8456 0.0302 341.4597);
+  --popover: oklch(0.1548 0.0132 338.9015);
+  --popover-foreground: oklch(0.9647 0.0091 341.8035);
+  --primary: oklch(0.4607 0.1853 4.0994);
+  --primary-foreground: oklch(0.8560 0.0618 346.3684);
+  --secondary: oklch(0.3137 0.0306 310.0610);
+  --secondary-foreground: oklch(0.8483 0.0382 307.9613);
+  --muted: oklch(0.2634 0.0219 309.4748);
+  --muted-foreground: oklch(0.7940 0.0372 307.1032);
+  --accent: oklch(0.3649 0.0508 308.4911);
+  --accent-foreground: oklch(0.9647 0.0091 341.8035);
+  --destructive: oklch(0.2258 0.0524 12.6119);
+  --destructive-foreground: oklch(1.0000 0 0);
+  --border: oklch(0.3286 0.0154 343.4461);
+  --input: oklch(0.3387 0.0195 332.8347);
+  --ring: oklch(0.5916 0.2180 0.5844);
+  --chart-1: oklch(0.5316 0.1409 355.1999);
+  --chart-2: oklch(0.5633 0.1912 306.8561);
+  --chart-3: oklch(0.7227 0.1502 60.5799);
+  --chart-4: oklch(0.6193 0.2029 312.7422);
+  --chart-5: oklch(0.6118 0.2093 6.1387);
+  --sidebar: oklch(0.1893 0.0163 331.0475);
+  --sidebar-foreground: oklch(0.8607 0.0293 343.6612);
+  --sidebar-primary: oklch(0.4882 0.2172 264.3763);
+  --sidebar-primary-foreground: oklch(1.0000 0 0);
+  --sidebar-accent: oklch(0.2337 0.0261 338.1961);
+  --sidebar-accent-foreground: oklch(0.9674 0.0013 286.3752);
+  --sidebar-border: oklch(0 0 0);
+  --sidebar-ring: oklch(0.5916 0.2180 0.5844);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.5rem;
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
 }
 
 /* --- General Body Styles --- */
 body {
-    font-family: var(--font-family);
+    font-family: var(--font-sans);
     background-color: var(--background);
     color: var(--foreground);
+    background-image: radial-gradient(circle at 10% 20%, oklch(0.5316 0.1409 355.1999 / 0.1) 0%, transparent 20%),
+                      radial-gradient(circle at 90% 80%, oklch(0.8696 0.0675 334.8991 / 0.1) 0%, transparent 20%);
 }
 
 /* --- Remove Streamlit's default hamburger menu and header --- */
-/* A more robust way to target the main app container for padding would be needed if this is essential */
-/* For now, we remove the fragile selector .st-emotion-cache-18ni7ap */
-
 #MainMenu {visibility: hidden;}
-/* header {visibility: hidden;}  <-- THIS IS THE LIKELY CULPRIT. A generic 'header' tag selector can hide the entire Streamlit app. */
 footer {visibility: hidden;}
 
-/* --- Hero Section Styling --- */
-.hero-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* --- FoodCatalyst Header --- */
+.food-catalyst-header {
     text-align: center;
-    padding: 6rem 2rem;
-    min-height: 80vh;
-    animation: fadeIn 1.5s ease-in-out;
-    background-image: linear-gradient(135deg, var(--background) 0%, var(--secondary) 100%);
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: var(--primary-foreground);
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-section h1 {
-    font-size: 4.5rem;
+.food-catalyst-header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, oklch(1.0000 0 0 / 0.1) 0%, transparent 70%);
+    transform: rotate(30deg);
+}
+
+.food-catalyst-header h1 {
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: var(--foreground);
-    letter-spacing: -2px;
+    letter-spacing: var(--tracking-normal);
+    text-shadow: 2px 2px 4px oklch(0 0 0 / 0.3);
 }
 
-.hero-section h2 {
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--primary); /* Using primary as the highlight color */
-}
-
-.hero-section .subtitle {
-    font-size: 1.2rem;
+.food-catalyst-header p {
+    font-size: 1.4rem;
     font-weight: 300;
-    color: var(--muted-foreground);
+    opacity: 0.9;
     max-width: 600px;
-    margin-bottom: 2rem;
+    margin: 0 auto;
 }
 
-/* --- Custom Call-to-Action Button Style --- */
-.cta-button {
-    display: inline-block;
-    text-decoration: none;
-    border: 2px solid var(--primary);
-    border-radius: 50px; /* Pill shape */
+/* --- Form Styling --- */
+.stForm {
+    background-color: var(--card);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.stForm h3 {
     color: var(--primary);
-    background-color: transparent;
-    padding: 0.75rem 2.5rem;
+    margin-top: 0;
+}
+
+/* --- Button Styling --- */
+.stButton>button {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: var(--primary-foreground);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px oklch(0.5316 0.1409 355.1999 / 0.3);
 }
 
-.cta-button:hover {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    border-color: var(--primary);
+.stButton>button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1); /* Generic shadow for light color */
+    box-shadow: 0 7px 20px oklch(0.5316 0.1409 355.1999 / 0.5);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--ring) 100%);
 }
 
-.cta-button:active {
+.stButton>button:active {
     transform: translateY(0);
-    box-shadow: none;
 }
 
-
-/* --- Features Section --- */
-.features-section {
-    padding: 4rem 2rem;
-    text-align: center;
-    background-color: var(--background);
+/* --- Input Fields --- */
+.stTextInput>div>div>input {
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--foreground);
+    padding: 0.75rem;
 }
 
-.features-section h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 3rem;
+.stTextInput>div>div>input:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 2px oklch(0.5916 0.2180 0.5844 / 0.2);
+}
+
+/* --- Select Box --- */
+.stSelectbox>div>div {
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     color: var(--foreground);
 }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+/* --- Sidebar Styling --- */
+[data-testid="stSidebar"] {
+    background-color: var(--sidebar);
+    border-right: 1px solid var(--sidebar-border);
 }
 
-.feature-card {
-    background-color: var(--card);
-    padding: 2rem;
-    border-radius: 15px;
+[data-testid="stSidebar"] .stMarkdown {
+    color: var(--sidebar-foreground);
+}
+
+/* --- Restaurant Cards --- */
+.restaurant-card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
     border: 1px solid var(--border);
-    transition: all 0.3s ease-in-out;
-    height: 100%;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
 }
 
-.feature-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--ring);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+.restaurant-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-xl);
 }
 
-.feature-card h3 {
-    font-size: 2.5rem; /* For emoji */
-    margin-bottom: 1rem;
-}
-
-.feature-card h4 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+.restaurant-name {
     color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-.feature-card p {
-    font-size: 0.9rem;
+.restaurant-rating {
+    color: #ffa500;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-cuisine {
+    color: var(--secondary-foreground);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-location {
     color: var(--muted-foreground);
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-analysis h4 {
+    color: var(--primary);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Result Container --- */
+.result-container {
+    background-color: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+}
+
+/* --- Alert Styles --- */
+.stAlert {
+    border-radius: var(--radius-md);
+    border: none;
+    box-shadow: var(--shadow);
+}
+
+.stInfo {
+    background-color: oklch(0.5316 0.1409 355.1999 / 0.1);
+    color: var(--foreground);
+    border-left: 4px solid var(--primary);
+}
+
+.stSuccess {
+    background-color: oklch(0.6038 0.2363 344.4657 / 0.1);
+    color: var(--foreground);
+    border-left: 4px solid oklch(0.6038 0.2363 344.4657);
+}
+
+.stWarning {
+    background-color: oklch(0.7843 0.1256 58.9964 / 0.1);
+    color: var(--foreground);
+    border-left: 4px solid oklch(0.7843 0.1256 58.9964);
+}
+
+.stError {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+    border-left: 4px solid oklch(0.5248 0.1368 20.8317);
+}
+
+/* --- Text Area --- */
+.stTextArea>div>div>textarea {
+    background-color: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--foreground);
+}
+
+/* --- Divider --- */
+.stMarkdown hr {
+    border-top: 1px solid var(--border);
 }
 
 /* --- Animations --- */
@@ -171,34 +387,25 @@ footer {visibility: hidden;}
     }
 }
 
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
-    .hero-section {
-        padding: 4rem 1rem;
-    }
-    .hero-section h1 {
+    .food-catalyst-header h1 {
         font-size: 2.5rem;
     }
-    .hero-section h2 {
-        font-size: 1.5rem;
+    
+    .food-catalyst-header p {
+        font-size: 1.1rem;
     }
-    .hero-section .subtitle {
-        font-size: 0.9rem;
+    
+    .restaurant-card {
+        padding: 1rem;
     }
-
-    .features-section {
-        padding: 3rem 1rem;
-    }
-
-    .features-section h2 {
-        font-size: 2rem;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr; /* Stack columns on mobile */
-    }
-
-    .feature-card {
-        padding: 1.5rem;
+    
+    .restaurant-name {
+        font-size: 1.3rem;
     }
 }
