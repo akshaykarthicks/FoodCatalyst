@@ -220,7 +220,7 @@ if submitted:
                     else:
                         st.error("Could not find an itinerary in the result. The AI agents might be having trouble.")
                 except json.JSONDecodeError:
-                    st.error("Failed to decode the results from the AI. The format might be incorrect.")
+                    st.error("The Result  might be incorrect.Kindly check twice !!")
             else:
                 st.warning("No structured data found in the result. The AI agents might not have found any restaurants.")
 
