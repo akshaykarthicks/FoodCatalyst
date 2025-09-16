@@ -129,142 +129,112 @@ Welcome to FoodCatalyst, your AI-powered dining assistant! Our system uses multi
 # Sidebar for inputs
 with st.sidebar:
     st.header("🍽️ Your Preferences")
+    
+    topic = st.text_input("Cuisine/Food Type", "Indian", help="e.g., Italian, Sushi, Vegan")
+    location = st.text_input("Location", "Chennai", help="e.g., New York, Paris, Tokyo")
+    date_option = st.selectbox("When to Dine?", ["Today", "Tomorrow", "This Weekend", "Next Week"])
+    
+    with st.expander("⚙️ Advanced Settings", expanded=False):
+        current_year = st.number_input("Current Year", value=datetime.now().year, min_value=2020, max_value=2030)
+
     st.markdown("---")
     
-    topic = st.text_input("What type of cuisine are you interested in?", "Biryani")
-    location = st.text_input("Where would you like to dine?", "Chennai")
-    
-    st.markdown("---")
-    st.subheader("🔍 How it works")
-    st.markdown("""
-    1. **Scout Agent** discovers trending restaurants
-    2. **Critic Agent** analyzes reviews and menus
-    3. **Planner Agent** creates your personalized itinerary
-    """)
-    
-    st.markdown("---")
-    st.subheader("⚙️ Advanced Settings")
-    current_year = st.number_input("Current Year", value=datetime.now().year, min_value=2020, max_value=2030)
+    with st.expander("🔍 How It Works", expanded=True):
+        st.markdown("""
+        - **Scout Agent**: Discovers top-rated and trending restaurants.
+        - **Critic Agent**: Analyzes reviews, menus, and customer feedback.
+        - **Planner Agent**: Creates a personalized dining itinerary for you.
+        """)
+
+    with st.expander("💡 Tips", expanded=False):
+        st.markdown("""
+        - Be specific with your cuisine preferences.
+        - Try different locations to discover new places.
+        - Check back for updated recommendations.
+        """)
+
+    with st.expander("🌟 Featured Cuisines", expanded=False):
+        st.markdown("- Italian\n- Japanese\n- Mexican\n- Indian\n- French\n- Thai\n- Mediterranean")
+
+    with st.expander("📍 Popular Cities", expanded=False):
+        st.markdown("- New York\n- London\n- Paris\n- Tokyo\n- Bangkok\n- Rome\n- Barcelona")
 
 # Main content area
-col1, col2 = st.columns([2, 1])
+st.subheader("🤖 Your Personal Dining Assistant")
 
-with col1:
-    st.subheader("Enter your dining preferences")
+# Create input form
+with st.form("food_preferences_main"):
+    st.markdown("##### Tell us what you're craving!")
     
-    # Create input form
-    with st.form("food_preferences"):
-        st.markdown("#### 🍽️ What would you like to eat?")
-        topic_input = st.text_input("Cuisine or food type", value=topic, placeholder="e.g., Italian, Sushi, Vegan")
-        
-        st.markdown("#### 📍 Where would you like to dine?")
-        location_input = st.text_input("City or location", value=location, placeholder="e.g., New York, Paris, Tokyo")
-        
-        st.markdown("#### 📅 When are you planning to dine?")
-        date_option = st.selectbox("When", ["Today", "Tomorrow", "This Weekend", "Next Week"])
-        
-        submitted = st.form_submit_button("🍽️ Discover Restaurants")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        topic_input = st.text_input("Cuisine or food type", value=topic)
+    with col2:
+        location_input = st.text_input("City or location", value=location)
+    with col3:
+        date_input = st.selectbox("When", ["Today", "Tomorrow", "This Weekend", "Next Week"], index=["Today", "Tomorrow", "This Weekend", "Next Week"].index(date_option))
     
-    # Process the form submission
-    if submitted:
-        if topic_input and location_input:
-            st.info("🔍 Our AI agents are searching for the best restaurants...")
-            
-            try:
-                # Import and run the FoodCatalyst crew
-                from food_catalyst.crew import FoodCatalyst
-                
-                # Prepare inputs
-                inputs = {
-                    'topic': topic_input,
-                    'location': location_input,
-                    'current_year': str(current_year)
-                }
-                
-                # Run the crew
-                result = FoodCatalyst().crew().kickoff(inputs=inputs)
-                
-                # Display results
-                st.success("✅ Discovery complete! Here are your personalized recommendations:")
-                
-                # Try to parse the result and display in a nice format
-                st.markdown("### 📋 Your Dining Itinerary")
-                
-                # Try to extract JSON from the result
-                json_match = re.search(r'\{.*\}', result.raw, re.DOTALL)
-                if json_match:
-                    try:
-                        itinerary_data = json.loads(json_match.group())
-                        if 'itinerary' in itinerary_data:
-                            # Display restaurant cards
-                            for i, restaurant in enumerate(itinerary_data['itinerary'], 1):
-                                with st.container():
-                                    st.markdown(f"""
-                                    <div class="restaurant-card">
-                                        <div class="restaurant-name">#{i} {restaurant.get('name', 'N/A')}</div>
-                                        <div class="restaurant-rating">⭐ {restaurant.get('rating', 'N/A')}</div>
-                                        <div class="restaurant-cuisine">🍽️ {restaurant.get('cuisine', 'N/A')}</div>
-                                        <div class="restaurant-location">📍 {restaurant.get('location', 'N/A')}</div>
-                                        <div class="restaurant-analysis">
-                                            <h4>Analysis:</h4>
-                                            <p>{restaurant.get('analysis', 'No analysis available.')}</p>
-                                        </div>
-                                        <a href="{restaurant.get('booking_link', '#')}" target="_blank" class="stButton">
-                                            <button>Book Now</button>
-                                        </a>
-                                    </div>
-                                    """, unsafe_allow_html=True)
-                        else:
-                            st.text_area("Raw Results", result.raw, height=300)
-                    except json.JSONDecodeError:
-                        st.text_area("Raw Results", result.raw, height=300)
-                else:
-                    st.text_area("Raw Results", result.raw, height=300)
-                
-                # Also show the HTML report if it was generated
-                if os.path.exists("report.html"):
-                    st.markdown("### 📄 HTML Report Preview")
-                    with open("report.html", "r", encoding="utf-8") as f:
-                        html_content = f.read()
-                        st.components.v1.html(html_content, height=600, scrolling=True)
-                
-            except Exception as e:
-                st.error(f"❌ An error occurred: {str(e)}")
-                st.info("Please check your API keys and configuration in the .env file.")
-        else:
-            st.warning("Please fill in both cuisine type and location.")
+    submitted = st.form_submit_button("🍽️ Discover Restaurants")
 
-with col2:
-    st.subheader("💡 Tips")
-    st.markdown("""
-    - Be specific with your cuisine preferences
-    - Try different locations to discover new places
-    - Check back regularly for updated recommendations
-    """)
-    
-    st.markdown("---")
-    st.subheader("🌟 Featured Cuisines")
-    st.markdown("""
-    - Italian
-    - Japanese
-    - Mexican
-    - Indian
-    - French
-    - Thai
-    - Mediterranean
-    """)
-    
-    st.markdown("---")
-    st.subheader("📍 Popular Cities")
-    st.markdown("""
-    - New York
-    - London
-    - Paris
-    - Tokyo
-    - Bangkok
-    - Rome
-    - Barcelona
-    """)
+# Process the form submission
+if submitted:
+    if topic_input and location_input:
+        st.info("🔍 Our AI agents are searching for the best restaurants...")
+
+        try:
+            from food_catalyst.crew import FoodCatalyst
+
+            inputs = {
+                'topic': topic_input,
+                'location': location_input,
+                'current_year': str(current_year)
+            }
+
+            result = FoodCatalyst().crew().kickoff(inputs=inputs)
+
+            st.success("✅ Discovery complete! Here are your personalized recommendations:")
+
+            st.markdown("### 📋 Your Dining Itinerary")
+
+            json_match = re.search(r'\{.*\}', result.raw, re.DOTALL)
+            if json_match:
+                try:
+                    itinerary_data = json.loads(json_match.group())
+                    if 'itinerary' in itinerary_data:
+                        for i, restaurant in enumerate(itinerary_data['itinerary'], 1):
+                            st.markdown(f"""
+                            <div class="restaurant-card">
+                                <div class="restaurant-name">#{i} {restaurant.get('name', 'N/A')}</div>
+                                <div class="restaurant-rating">⭐ {restaurant.get('rating', 'N/A')}</div>
+                                <div class="restaurant-cuisine">🍽️ {restaurant.get('cuisine', 'N/A')}</div>
+                                <div class="restaurant-location">📍 {restaurant.get('location', 'N/A')}</div>
+                                <div class="restaurant-analysis">
+                                    <h4>Analysis:</h4>
+                                    <p>{restaurant.get('analysis', 'No analysis available.')}</p>
+                                </div>
+                                <a href="https://www.google.com/search?q={restaurant.get('name', '').replace(' ', '+')}+{restaurant.get('location', '').replace(' ', '+')}" target="_blank" class="stButton">
+                                    <button>Google Search</button>
+                                </a>
+                            </div>
+                            """, unsafe_allow_html=True)
+                    else:
+                        st.error("Could not find an itinerary in the result. The AI agents might be having trouble.")
+                except json.JSONDecodeError:
+                    st.error("Failed to decode the results from the AI. The format might be incorrect.")
+            else:
+                st.warning("No structured data found in the result. The AI agents might not have found any restaurants.")
+
+            if os.path.exists("report.html"):
+                st.markdown("### 📄 HTML Report Preview")
+                with open("report.html", "r", encoding="utf-8") as f:
+                    html_content = f.read()
+                    st.components.v1.html(html_content, height=600, scrolling=True)
+
+        except Exception as e:
+            st.error(f"❌ An error occurred: {str(e)}")
+            st.info("Please check your API keys and configuration in the .env file.")
+    else:
+        st.warning("Please fill in both cuisine type and location.")
 
 # Footer
 st.markdown("---")
