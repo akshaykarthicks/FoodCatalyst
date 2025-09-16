@@ -36,16 +36,33 @@ planning_task:
     Organize them into a user-friendly plan that balances variety, convenience, and alignment with user preferences. 
     For booking links, make an effort to find official restaurant websites or reservation platforms like OpenTable, Resy, or similar.
   expected_output: >
-    A JSON object with the key "itinerary". 
-    The value should be a list of restaurant objects. 
-    Each restaurant object must contain: 
-    - name 
-    - rating 
-    - cuisine 
-    - location 
-    - analysis (from Critic) 
-    - booking_link (make an effort to find real booking links; if truly unavailable, use "#") 
-    - image_url.
+    A single, valid JSON object. Do not include any other text, explanations, or markdown formatting.
+    The JSON object must have a single key "itinerary".
+    The value of "itinerary" must be a list of restaurant objects.
+    Each restaurant object in the list must strictly adhere to the following schema:
+    {
+      "name": "string",
+      "rating": "string",
+      "cuisine": "string",
+      "location": "string",
+      "analysis": "string",
+      "booking_link": "string (URL or # if unavailable)",
+      "image_url": "string (URL)"
+    }
+    Example:
+    {
+      "itinerary": [
+        {
+          "name": "The Grand Eatery",
+          "rating": "4.5/5",
+          "cuisine": "Italian",
+          "location": "123 Main St, Anytown",
+          "analysis": "Excellent pasta dishes, but the service can be slow.",
+          "booking_link": "https://example.com/book",
+          "image_url": "https://example.com/image.jpg"
+        }
+      ]
+    }
   agent: planner
 
 formatting_task:
