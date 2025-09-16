@@ -1,79 +1,74 @@
 research_task:
   description: >
-    Research and discover highly-rated or trending restaurants in the {location} area that match the user's preference for {topic}. 
+    Research and discover highly-rated or trending restaurants in the {location} area that match the user's preference for {topic} and are suitable for {meal_periods}. 
+    Focus on restaurants that serve appropriate meals for the specified time periods:
+    - Breakfast/Morning: cafes, breakfast spots, brunch places
+    - Lunch/Afternoon: lunch restaurants, casual dining, quick service
+    - Dinner/Evening: dinner restaurants, fine dining, evening establishments
     Collect reliable information from credible sources only. 
-    Each restaurant entry must include ratings, cuisine type, location highlights, an image URL, and a short note on what makes it stand out.
+    Each restaurant entry must include ratings, cuisine type, location highlights, operating hours, meal period suitability, an image URL, and a short note on what makes it stand out for that specific meal time.
   expected_output: >
-    A list of 5–10 restaurant recommendations. 
-    Each recommendation must include: 
-    - name 
-    - rating (with source, e.g., Tripadvisor, Zomato, Google Maps) 
-    - cuisine type 
-    - location 
-    - standout features 
-    - image_url (verified, non-placeholder, preferably from the restaurant's official site or trusted review platform).
+    A list of restaurant recommendations with their details.
   agent: scout
 
 analyze_task:
   description: >
-    Review and analyze the restaurant options provided by the Scout. 
-    For each restaurant, examine menus, customer feedback, and available photos. 
-    Provide a clear, balanced assessment with both pros and cons, avoiding speculation. 
+    Review and analyze the restaurant options provided by the Scout for each meal period ({meal_periods}). 
+    You must be prepared to handle incomplete data from the scout. If some information is missing, you should explicitly state that it's not available.
+    For each restaurant, examine menus appropriate for the meal time, customer feedback about that specific meal service, and available photos. 
+    Consider factors like:
+    - Breakfast: coffee quality, breakfast menu variety, morning atmosphere
+    - Lunch: portion sizes, speed of service, lunch specials
+    - Dinner: ambiance, dinner menu quality, evening service
+    Provide a clear, balanced assessment with both pros and cons specific to the meal period, avoiding speculation. 
     If data is missing or uncertain, explicitly mark it as "not available" instead of inventing details.
   expected_output: >
-    A structured list of restaurant analyses. 
+    A structured list of restaurant analyses organized by meal period. 
     For each restaurant include: 
-    - pros 
-    - cons 
-    - overall assessment 
-    - recommendation rating (numerical, e.g., 1–5 scale). 
-    The output must remain factual, concise, and user-oriented.
+    - meal_period suitability
+    - pros for that specific meal time
+    - cons for that specific meal time
+    - overall assessment for the meal period
+    - recommendation rating (numerical, e.g., 1–5 scale) for that meal time. 
+    The output must remain factual, concise, and user-oriented with meal period context.
   agent: critic
 
 planning_task:
   description: >
-    Create a personalized dining itinerary using the restaurants researched by Scout and analyzed by Critic. 
-    Organize them into a user-friendly plan that balances variety, convenience, and alignment with user preferences. 
+    Create a personalized dining itinerary using the restaurants researched by Scout and analyzed by Critic, organized by meal periods ({meal_periods}). 
+    Group restaurants by their appropriate meal times:
+    - Breakfast/Morning (7AM-11AM): breakfast spots, cafes, brunch places
+    - Lunch/Afternoon (11AM-4PM): lunch restaurants, casual dining
+    - Dinner/Evening (5PM-10PM): dinner restaurants, fine dining
+    Organize them into a user-friendly plan that balances variety, convenience, timing, and alignment with user preferences. 
+    Consider restaurant operating hours and meal service times. 
     For booking links, make an effort to find official restaurant websites or reservation platforms like OpenTable, Resy, or similar.
+    **Crucially, for each restaurant, you must synthesize the Critic's findings (pros, cons, and overall assessment) into a concise and informative 'analysis' string.**
+    This is the most important part of your job. Do not use placeholders or generic text. The 'analysis' must be a thoughtful summary based on the critic's input.
   expected_output: >
     A single, valid JSON object. Do not include any other text, explanations, or markdown formatting.
-    The JSON object must have a single key "itinerary".
-    The value of "itinerary" must be a list of restaurant objects.
-    Each restaurant object in the list must strictly adhere to the following schema:
-    {
-      "name": "string",
-      "rating": "string",
-      "cuisine": "string",
-      "location": "string",
-      "analysis": "string",
-      "booking_link": "string (URL or # if unavailable)",
-      "image_url": "string (URL)"
-    }
-    Example:
-    {
-      "itinerary": [
-        {
-          "name": "The Grand Eatery",
-          "rating": "4.5/5",
-          "cuisine": "Italian",
-          "location": "123 Main St, Anytown",
-          "analysis": "Excellent pasta dishes, but the service can be slow.",
-          "booking_link": "https://example.com/book",
-          "image_url": "https://example.com/image.jpg"
-        }
-      ]
-    }
+    The JSON object should have keys for each meal period (e.g., "breakfast", "lunch", "dinner").
+    Each meal period should contain a list of restaurant objects, where each object has details like name, rating, cuisine, location, etc.
+    This JSON will be passed directly to the Formatter agent, so ensure it is complete and well-structured.
   agent: planner
 
 formatting_task:
   description: >
-    Take the JSON dining itinerary from Planner and convert it into a polished, single-page HTML report. 
-    The report must include inline CSS for styling and be structured for readability. 
-    Ensure images render correctly and all text sections (ratings, analyses, pros/cons, recommendations) are included.
-    If the input data is not properly formatted as JSON with an itinerary key, make an effort to parse it correctly.
+    Take the JSON dining itinerary from Planner and convert it into a polished, single-page HTML report with modern styling. 
+    The report must include comprehensive inline CSS for professional appearance, meal period organization, 
+    responsive design, and interactive elements. Ensure images render correctly with fallbacks, 
+    all text sections are beautifully formatted, and the design matches the quality of modern web applications.
+    Handle various JSON formats gracefully and ensure all data is properly displayed.
   expected_output: >
-    A complete HTML document as a string, styled with inline CSS. 
-    The report must be visually clean, accessible, and present the itinerary as a dining guide. 
-    No placeholders or broken links should be included. Handle missing booking links gracefully.
+    A complete, modern HTML document as a string with comprehensive inline CSS styling. 
+    The report must be visually stunning, fully responsive, and professionally designed with:
+    - Modern gradient backgrounds and card-based layouts
+    - Meal period organization with appropriate icons and sections
+    - High-quality fallback images for restaurants
+    - Interactive hover effects and smooth animations
+    - Professional typography and color schemes
+    - Accessible design with proper contrast and spacing
+    - Graceful handling of missing data and broken links
+    The final output should rival the quality of premium restaurant websites.
   agent: formatter
   output_file: report.html
