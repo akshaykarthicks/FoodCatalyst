@@ -1,159 +1,621 @@
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Your Dining Itinerary</title>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f4f7f6;
-        color: #333;
-    }
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    h1 {
-        text-align: center;
-        color: #2c3e50;
-        margin-bottom: 40px;
-    }
-    .restaurant {
-        background-color: #ffffff;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        display: flex;
-        gap: 20px;
-    }
-    .restaurant-image {
-        flex: 1;
-        min-width: 200px;
-    }
-    .restaurant-image img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-    .restaurant-details {
-        flex: 2;
-    }
-    .restaurant h2 {
-        margin-top: 0;
-        color: #e74c3c;
-    }
-    .rating {
-        font-weight: bold;
-        color: #f39c12;
-        font-size: 1.1em;
-    }
-    .booking-link {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 10px 15px;
-        background-color: #3498db;
-        color: #ffffff;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-    .booking-link:hover {
-        background-color: #2980b9;
-    }
-    .booking-link.disabled {
-        background-color: #bdc3c7;
-        cursor: not-allowed;
-    }
-    .booking-link.disabled:hover {
-        background-color: #bdc3c7;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ Your Dining Itinerary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ffa500;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+            --spacing: 1.5rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            background-image: radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 20%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .meal-section {
+            margin-bottom: 3rem;
+        }
+        
+        .meal-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .restaurant-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 0;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+        
+        .restaurant-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .restaurant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .restaurant-image img[src=""], .restaurant-image img:not([src]) {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .restaurant-image img[src=""]:after, .restaurant-image img:not([src]):after {
+            content: '🍽️';
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.05);
+        }
+        
+        .restaurant-content {
+            padding: var(--spacing);
+        }
+        
+        .restaurant-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-rating {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .restaurant-rating::before {
+            content: "⭐";
+            font-size: 1.2rem;
+        }
+        
+        .restaurant-info {
+            display: grid;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .info-item .icon {
+            font-size: 1rem;
+            width: 20px;
+        }
+        
+        .meal-period-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .analysis-section {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .analysis-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .analysis-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-disabled {
+            background: #e0e0e0;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            border: none;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+        
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .generated-badge {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .restaurant-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>Your Dining Itinerary</h1>
+    <div class="container">
+        <div class="header fade-in">
+            <h1>🍽️ Your Dining Itinerary</h1>
+            <p>AI-curated restaurant recommendations for your perfect dining experience</p>
+        </div>
 
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="#" alt="Annalakshmi" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
+        <div class="meal-section fade-in">
+            <h2 class="meal-title">🌅 Breakfast & Morning</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Perfect start to your day</p>
+            <div class="restaurant-grid">
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Sunrise Cafe" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">Sunrise Cafe</h3>
+                        <div class="restaurant-rating">4.5</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>American</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>123 Main St, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic's review praises the cafe's cozy atmosphere and excellent coffee, but notes that service can be slow during peak hours.  Overall, a solid choice for a relaxed breakfast.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.sunrisecafe.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=Sunrise+Cafe+123+Main+St,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=Sunrise+Cafe+123+Main+St,+Anytown" target="_blank">https://www.google.com/search?q=Sunrise+Cafe+123+Main+St,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="The Pantry" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">The Pantry</h3>
+                        <div class="restaurant-rating">4</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>Bakery/Breakfast</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>456 Oak Ave, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic found The Pantry's pastries exceptional, but the breakfast dishes somewhat unremarkable.  A good option for a quick pastry and coffee, but not ideal for a full breakfast.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.thepantrybakery.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=The+Pantry+456+Oak+Ave,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=The+Pantry+456+Oak+Ave,+Anytown" target="_blank">https://www.google.com/search?q=The+Pantry+456+Oak+Ave,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="restaurant-details">
-            <h2>Annalakshmi</h2>
-            <p><strong>Cuisine:</strong> South Indian Vegetarian</p>
-            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
-            <p class="rating"><strong>Rating:</strong> 4.5</p>
-            <h3>Analysis</h3>
-            <p>A popular vegetarian restaurant known for its traditional South Indian dishes and charitable work.</p>
-            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
+
+        <div class="meal-section fade-in">
+            <h2 class="meal-title">☀️ Lunch & Afternoon</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Midday dining experiences</p>
+            <div class="restaurant-grid">
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Little Italy Pizza" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">Little Italy Pizza</h3>
+                        <div class="restaurant-rating">4.2</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>Italian</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>789 Pine Ln, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic highlighted the fresh ingredients and authentic taste of Little Italy's pizzas.  However, they mentioned the restaurant can get crowded during lunch and the service might be a little slow.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.littleitalypizza.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=Little+Italy+Pizza+789+Pine+Ln,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=Little+Italy+Pizza+789+Pine+Ln,+Anytown" target="_blank">https://www.google.com/search?q=Little+Italy+Pizza+789+Pine+Ln,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="The Burger Joint" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">The Burger Joint</h3>
+                        <div class="restaurant-rating">4</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>American</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>101 Maple Dr, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic praised The Burger Joint's juicy burgers and extensive beer selection. They found the ambiance a bit noisy, and the fries slightly underwhelming.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.theburgerjoint.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=The+Burger+Joint+101+Maple+Dr,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=The+Burger+Joint+101+Maple+Dr,+Anytown" target="_blank">https://www.google.com/search?q=The+Burger+Joint+101+Maple+Dr,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="meal-section fade-in">
+            <h2 class="meal-title">🌙 Dinner & Evening</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">Evening culinary delights</p>
+            <div class="restaurant-grid">
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="The French Table" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">The French Table</h3>
+                        <div class="restaurant-rating">4.8</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>French</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>222 Elm St, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic raved about The French Table's elegant ambiance, impeccable service, and creative French dishes.  However, they noted it's a pricier option.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.thefrenchtable.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=The+French+Table+222+Elm+St,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=The+French+Table+222+Elm+St,+Anytown" target="_blank">https://www.google.com/search?q=The+French+Table+222+Elm+St,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <div class="restaurant-image">
+                        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Spice Route" onerror="this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80';">
+                    </div>
+                    <div class="restaurant-content">
+                        
+                        <h3 class="restaurant-name">Spice Route</h3>
+                        <div class="restaurant-rating">4.5</div>
+                        
+                        <div class="restaurant-info">
+                            <div class="info-item">
+                                <span class="icon">🍽️</span>
+                                <span>Indian</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">📍</span>
+                                <span>333 Cherry Ave, Anytown</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="icon">🕐</span>
+                                <span>9:00 AM - 10:00 PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-section">
+                            <div class="analysis-title">🎯 Our Analysis</div>
+                            <div class="analysis-text">Critic described Spice Route as a vibrant restaurant offering a diverse selection of authentic Indian dishes. While the food was excellent, the critic felt the portions could be larger.</div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="https://www.spiceroute.com" class="btn btn-primary" target="_blank" >Reserve Table</a>
+                            <a href="https://www.google.com/search?q=Spice+Route+333+Cherry+Ave,+Anytown" class="btn btn-secondary" target="_blank">View on Google</a>
+                        </div>
+                        <div style="margin-top: 1rem; word-break: break-all;">
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Google Search URL: <a href="https://www.google.com/search?q=Spice+Route+333+Cherry+Ave,+Anytown" target="_blank">https://www.google.com/search?q=Spice+Route+333+Cherry+Ave,+Anytown</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated with ❤️ by FoodCatalyst AI</p>
+            <p>Powered by crewAI</p>
+            <div class="generated-badge">🤖 AI-Generated Recommendations</div>
         </div>
     </div>
     
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="#" alt="Dakshin" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
-        </div>
-        <div class="restaurant-details">
-            <h2>Dakshin</h2>
-            <p><strong>Cuisine:</strong> South Indian</p>
-            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
-            <p class="rating"><strong>Rating:</strong> 4.8</p>
-            <h3>Analysis</h3>
-            <p>Upscale restaurant offering a refined take on South Indian cuisine.</p>
-            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
-        </div>
-    </div>
-    
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="#" alt="Benjarong" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
-        </div>
-        <div class="restaurant-details">
-            <h2>Benjarong</h2>
-            <p><strong>Cuisine:</strong> Thai</p>
-            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
-            <p class="rating"><strong>Rating:</strong> 4.6</p>
-            <h3>Analysis</h3>
-            <p>A highly-rated Thai restaurant known for its authentic flavors and ambiance.</p>
-            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
-        </div>
-    </div>
-    
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="#" alt="The Fisherman's Wharf" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
-        </div>
-        <div class="restaurant-details">
-            <h2>The Fisherman's Wharf</h2>
-            <p><strong>Cuisine:</strong> Seafood</p>
-            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
-            <p class="rating"><strong>Rating:</strong> 4.2</p>
-            <h3>Analysis</h3>
-            <p>Known for its fresh seafood and lively ambiance. Can be a bit loud.</p>
-            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
-        </div>
-    </div>
-    
-    <div class="restaurant">
-        <div class="restaurant-image">
-            <img src="#" alt="Madras Coffee House" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400&q=80';">
-        </div>
-        <div class="restaurant-details">
-            <h2>Madras Coffee House</h2>
-            <p><strong>Cuisine:</strong> South Indian, Coffee</p>
-            <p><strong>Location:</strong> Chennai, Tamil Nadu</p>
-            <p class="rating"><strong>Rating:</strong> 4.0</p>
-            <h3>Analysis</h3>
-            <p>A legendary coffee house serving traditional South Indian breakfast and snacks.</p>
-            <a href="#" class="booking-link disabled" target="_blank" onclick="return false;">Booking Unavailable</a>
-        </div>
-    </div>
-    
-</div>
+    <script>
+        // Add smooth scrolling and interaction effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add staggered animation to cards
+            const cards = document.querySelectorAll('.restaurant-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+        });
+    </script>
 </body>
 </html>
 ```

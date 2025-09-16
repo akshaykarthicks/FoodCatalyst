@@ -15,7 +15,7 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['scout'],
             verbose=True,
-            tools=[SerperDevTool()]
+            tools=[SerperDevTool(n_results=5)]
         )
 
     @agent
@@ -23,7 +23,7 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['critic'],
             verbose=True,
-            tools=[SerperDevTool()]
+            tools=[SerperDevTool(n_results=5)]
         )
 
     @agent
@@ -31,7 +31,7 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['planner'],
             verbose=True,
-            tools=[SerperDevTool()]
+            tools=[SerperDevTool(n_results=5)]
         )
 
     @agent

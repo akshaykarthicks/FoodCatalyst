@@ -38,6 +38,36 @@ def local_css(file_name):
 # Load custom CSS
 local_css("style.css")
 
+def display_restaurant_card(restaurant, index, period_key=None):
+    """Helper function to display a restaurant card"""
+    operating_hours = restaurant.get('operating_hours', 'Hours not available')
+    meal_period = restaurant.get('meal_period', 'Anytime')
+    
+    # Add emoji based on meal period
+    period_emoji = {
+        'breakfast': '🌅',
+        'lunch': '☀️', 
+        'dinner': '🌙'
+    }.get(period_key, '🍽️')
+    
+    st.markdown(f"""
+    <div class="restaurant-card">
+        <div class="restaurant-name">{period_emoji} #{index} {restaurant.get('name', 'N/A')}</div>
+        <div class="restaurant-rating">⭐ {restaurant.get('rating', 'N/A')}</div>
+        <div class="restaurant-cuisine">🍽️ {restaurant.get('cuisine', 'N/A')}</div>
+        <div class="restaurant-location">📍 {restaurant.get('location', 'N/A')}</div>
+        <div class="restaurant-hours">🕐 {operating_hours}</div>
+        <div class="restaurant-meal-period">⏰ Best for: {meal_period}</div>
+        <div class="restaurant-analysis">
+            <h4>Analysis:</h4>
+            <p>{restaurant.get('analysis', 'No analysis available.')}</p>
+        </div>
+        <a href="https://www.google.com/search?q={restaurant.get('name', '').replace(' ', '+')}+{restaurant.get('location', '').replace(' ', '+')}" target="_blank" class="stButton">
+            <button>Google Search</button>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
 # Custom CSS for FoodCatalyst
 st.markdown("""
 <style>
@@ -110,6 +140,22 @@ st.markdown("""
         font-weight: bold;
         font-size: 1.1rem;
     }
+    
+    .restaurant-hours {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 0.3rem 0;
+    }
+    
+    .restaurant-meal-period {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        display: inline-block;
+        margin: 0.5rem 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -134,6 +180,18 @@ with st.sidebar:
     location = st.text_input("Location", "Chennai", help="e.g., New York, Paris, Tokyo")
     date_option = st.selectbox("When to Dine?", ["Today", "Tomorrow", "This Weekend", "Next Week"])
     
+    # Meal Planning Section
+    st.subheader("🕐 Meal Planning")
+    meal_periods = st.multiselect(
+        "Select meal times to plan for:",
+        ["Breakfast/Morning", "Lunch/Afternoon", "Dinner/Evening"],
+        default=["Lunch/Afternoon"],
+        help="Choose which meal periods you want restaurant recommendations for"
+    )
+    
+    if meal_periods:
+        st.info(f"Planning for: {', '.join(meal_periods)}")
+    
     with st.expander("⚙️ Advanced Settings", expanded=False):
         current_year = st.number_input("Current Year", value=datetime.now().year, min_value=2020, max_value=2030)
 
@@ -141,16 +199,19 @@ with st.sidebar:
     
     with st.expander("🔍 How It Works", expanded=True):
         st.markdown("""
-        - **Scout Agent**: Discovers top-rated and trending restaurants.
-        - **Critic Agent**: Analyzes reviews, menus, and customer feedback.
-        - **Planner Agent**: Creates a personalized dining itinerary for you.
+        - **Scout Agent**: Discovers restaurants suitable for your selected meal periods.
+        - **Critic Agent**: Analyzes reviews and menus specific to meal times.
+        - **Planner Agent**: Creates a time-organized dining itinerary for you.
+        - **Meal Planning**: Organizes results by Breakfast, Lunch, and Dinner periods.
         """)
 
     with st.expander("💡 Tips", expanded=False):
         st.markdown("""
         - Be specific with your cuisine preferences.
+        - Select appropriate meal periods for better recommendations.
+        - Breakfast places often have different vibes than dinner spots.
         - Try different locations to discover new places.
-        - Check back for updated recommendations.
+        - Check restaurant operating hours before visiting.
         """)
 
     with st.expander("🌟 Featured Cuisines", expanded=False):
@@ -166,19 +227,23 @@ st.subheader("🤖 Your Personal Dining Assistant")
 with st.form("food_preferences_main"):
     st.markdown("##### Tell us what you're craving!")
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         topic_input = st.text_input("Cuisine or food type", value=topic)
-    with col2:
         location_input = st.text_input("City or location", value=location)
-    with col3:
+    with col2:
         date_input = st.selectbox("When", ["Today", "Tomorrow", "This Weekend", "Next Week"], index=["Today", "Tomorrow", "This Weekend", "Next Week"].index(date_option))
+        meal_periods_input = st.multiselect(
+            "Meal periods:",
+            ["Breakfast/Morning", "Lunch/Afternoon", "Dinner/Evening"],
+            default=meal_periods if 'meal_periods' in locals() else ["Lunch/Afternoon"]
+        )
     
     submitted = st.form_submit_button("🍽️ Discover Restaurants")
 
 # Process the form submission
 if submitted:
-    if topic_input and location_input:
+    if topic_input and location_input and meal_periods_input:
         st.info("🔍 Our AI agents are searching for the best restaurants...")
 
         try:
@@ -187,6 +252,7 @@ if submitted:
             inputs = {
                 'topic': topic_input,
                 'location': location_input,
+                'meal_periods': ', '.join(meal_periods_input),
                 'current_year': str(current_year)
             }
 
@@ -200,25 +266,31 @@ if submitted:
             if json_match:
                 try:
                     itinerary_data = json.loads(json_match.group())
+                    
+                    # Handle both old format (itinerary) and new format (meal periods)
                     if 'itinerary' in itinerary_data:
+                        # Legacy format - display as before but with meal period info if available
                         for i, restaurant in enumerate(itinerary_data['itinerary'], 1):
-                            st.markdown(f"""
-                            <div class="restaurant-card">
-                                <div class="restaurant-name">#{i} {restaurant.get('name', 'N/A')}</div>
-                                <div class="restaurant-rating">⭐ {restaurant.get('rating', 'N/A')}</div>
-                                <div class="restaurant-cuisine">🍽️ {restaurant.get('cuisine', 'N/A')}</div>
-                                <div class="restaurant-location">📍 {restaurant.get('location', 'N/A')}</div>
-                                <div class="restaurant-analysis">
-                                    <h4>Analysis:</h4>
-                                    <p>{restaurant.get('analysis', 'No analysis available.')}</p>
-                                </div>
-                                <a href="https://www.google.com/search?q={restaurant.get('name', '').replace(' ', '+')}+{restaurant.get('location', '').replace(' ', '+')}" target="_blank" class="stButton">
-                                    <button>Google Search</button>
-                                </a>
-                            </div>
-                            """, unsafe_allow_html=True)
+                            meal_period = restaurant.get('meal_period', 'Anytime')
+                            st.markdown(f"### {meal_period}")
+                            display_restaurant_card(restaurant, i)
                     else:
-                        st.error("Could not find an itinerary in the result. The AI agents might be having trouble.")
+                        # New meal period format
+                        meal_period_map = {
+                            'breakfast': '🌅 Breakfast/Morning',
+                            'lunch': '☀️ Lunch/Afternoon', 
+                            'dinner': '🌙 Dinner/Evening'
+                        }
+                        
+                        for period_key, period_title in meal_period_map.items():
+                            if period_key in itinerary_data and itinerary_data[period_key]:
+                                st.markdown(f"### {period_title}")
+                                for i, restaurant in enumerate(itinerary_data[period_key], 1):
+                                    display_restaurant_card(restaurant, i, period_key)
+                                st.markdown("---")
+                        
+                        if not any(period in itinerary_data for period in meal_period_map.keys()):
+                            st.error("No meal periods found in the result. The AI agents might be having trouble.")
                 except json.JSONDecodeError:
                     st.error("The Result  might be incorrect.Kindly check twice !!")
             else:
@@ -234,7 +306,7 @@ if submitted:
             st.error(f"❌ An error occurred: {str(e)}")
             st.info("Please check your API keys and configuration in the .env file.")
     else:
-        st.warning("Please fill in both cuisine type and location.")
+        st.warning("Please fill in cuisine type, location, and select at least one meal period.")
 
 # Footer
 st.markdown("---")
