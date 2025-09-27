@@ -34,7 +34,7 @@ def run():
     Run the crew.
 
     """
-    load_dotenv()
+    load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
     inputs = {
         'topic': 'Biryani',
         'location': 'Chennai',
