@@ -18,7 +18,7 @@ import re
 from dotenv import load_dotenv
 
 # Load environment variables
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
 # Add the src directory to the path so we can import the FoodCatalyst crew
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
