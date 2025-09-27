@@ -61,6 +61,7 @@ formatting_task:
     Handle various JSON formats gracefully and ensure all data is properly displayed.
   expected_output: >
     A complete, modern HTML document as a string with comprehensive inline CSS styling. 
+    IMPORTANT: Return ONLY the raw HTML content without any markdown code blocks, backticks, or other formatting wrappers. 
     The report must be visually stunning, fully responsive, and professionally designed with:
     - Modern gradient backgrounds and card-based layouts
     - Meal period organization with appropriate icons and sections
