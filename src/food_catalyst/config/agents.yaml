@@ -16,7 +16,7 @@ scout:
     bring forward the best, buzzworthy options.
   llm:
     provider: gemini
-    model: gemini-1.5-flash-latest
+    model: gemini/gemini-2.5-flash
 
 critic:
   role: >
@@ -33,8 +33,7 @@ critic:
     You balance enthusiasm with honesty, ensuring that users can trust your evaluations.
   llm:
     provider: gemini
-    model: gemini-1.5-flash-latest
-
+    model: gemini/gemini-2.5-flash
 planner:
   role: >
     Dining Itinerary Builder
@@ -49,7 +48,7 @@ planner:
     and memorable.
   llm:
     provider: gemini
-    model: gemini-1.5-flash-latest
+    model: gemini/gemini-2.5-flash
 
 formatter:
   role: >
@@ -65,4 +64,5 @@ formatter:
     You are particularly good at handling imperfect data and making it look great.
   llm:
     provider: gemini
-    model: gemini-1.5-flash-latest
+    model: gemini/gemini-2.5-flash
+    
