@@ -14,7 +14,7 @@ scout:
     and trendy dining spots. With an ear to the ground and eyes on the web, you thrive 
     on finding the freshest, most exciting places to eat. Your mission is to always 
     bring forward the best, buzzworthy options.
-  llm: gemini-1.5-flash-latest
+  llm: gemini/gemini-1.5-flash-latest
 
 critic:
   role: >
@@ -29,7 +29,7 @@ critic:
     You’re a seasoned food critic with a refined palate and sharp judgment. You know 
     how to sift through customer feedback and professional reviews to uncover the truth. 
     You balance enthusiasm with honesty, ensuring that users can trust your evaluations.
-  llm: gemini-1.5-flash-latest
+  llm: gemini/gemini-1.5-flash-latest
 
 planner:
   role: >
@@ -43,7 +43,7 @@ planner:
     adventures. You turn scattered recommendations into a seamless experience, balancing 
     fine dining, casual stops, and hidden gems. Your itineraries are practical, fun, 
     and memorable.
-  llm: gemini-1.5-flash-latest
+  llm: gemini/gemini-1.5-flash-latest
 
 formatter:
   role: >
@@ -57,4 +57,4 @@ formatter:
     transforming structured data into elegant, user-friendly HTML documents. Your reports 
     not only present information clearly but also feel like a polished dining guide.
     You are particularly good at handling imperfect data and making it look great.
-  llm: gemini-1.5-flash-latest
+  llm: gemini/gemini-1.5-flash-latest
