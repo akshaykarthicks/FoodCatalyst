@@ -1,8 +1,14 @@
-from crewai import Agent, Crew, Process, Task
+import os
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from food_catalyst.tools import HTMLGeneratorTool
 
+# Initialize the LLM for the entire crew
+gemini_llm = LLM(
+    model='gemini/gemini-2.5-flash',
+    api_key=os.environ.get("GEMINI_API_KEY")
+)
 
 @CrewBase
 class FoodCatalyst():
@@ -15,7 +21,8 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['scout'],
             verbose=True,
-            tools=[SerperDevTool(n_results=5)]
+            tools=[SerperDevTool(n_results=5)],
+            llm=gemini_llm
         )
 
     @agent
@@ -23,7 +30,8 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['critic'],
             verbose=True,
-            tools=[SerperDevTool(n_results=5)]
+            tools=[SerperDevTool(n_results=5)],
+            llm=gemini_llm
         )
 
     @agent
@@ -31,7 +39,8 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['planner'],
             verbose=True,
-            tools=[SerperDevTool(n_results=5)]
+            tools=[SerperDevTool(n_results=5)],
+            llm=gemini_llm
         )
 
     @agent
@@ -39,7 +48,8 @@ class FoodCatalyst():
         return Agent(
             config=self.agents_config['formatter'],
             verbose=True,
-            tools=[HTMLGeneratorTool()]
+            tools=[HTMLGeneratorTool()],
+            llm=gemini_llm
         )
 
     @task
@@ -65,7 +75,6 @@ class FoodCatalyst():
         return Task(
             config=self.tasks_config['formatting_task'],
             output_file='report.html',
-        
         )
 
     @crew
@@ -76,4 +85,5 @@ class FoodCatalyst():
             tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
+            llm=gemini_llm, # Assign the LLM to the crew
         )
