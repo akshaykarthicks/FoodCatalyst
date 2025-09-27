@@ -42,7 +42,7 @@ planner:
     adventures. You turn scattered recommendations into a seamless experience, balancing 
     fine dining, casual stops, and hidden gems. Your itineraries are practical, fun, 
     and memorable.
-   llm: gemini/gemini-2.5-flash
+  llm: gemini/gemini-2.5-flash
 
 formatter:
   role: >
